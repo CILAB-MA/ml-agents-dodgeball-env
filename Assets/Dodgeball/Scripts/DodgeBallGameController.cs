@@ -449,6 +449,7 @@ public class DodgeBallGameController : MonoBehaviour
         var HitAgentGroup = hitTeamID == 1 ? m_Team1AgentGroup : m_Team0AgentGroup;
         var ThrowAgentGroup = hitTeamID == 1 ? m_Team0AgentGroup : m_Team1AgentGroup;
         float hitBonus = GameMode == GameModeType.Elimination ? EliminationHitBonus : CTFHitBonus;
+        SupportRewardHit(hit);  // song_here
 
         // Always drop the flag
         if (DropFlagImmediately)
@@ -503,6 +504,17 @@ public class DodgeBallGameController : MonoBehaviour
         {
             hit.HitPointsRemaining--;
             thrower.AddReward(hitBonus);
+        }
+    }
+
+    // song_here
+    // Q. what's the difference between drop flag and hit point remaining
+    public void SupportRewardHit(DodgeBallAgent hit)
+    {
+        if (hit.HasEnemyFlag)
+        {
+            var HitAgentGroup = hitTeamID == 1 ? m_Team1AgentGroup : m_Team0AgentGroup;
+            HitAgentGroup.AddGroupReward(-2.0f);
         }
     }
 
