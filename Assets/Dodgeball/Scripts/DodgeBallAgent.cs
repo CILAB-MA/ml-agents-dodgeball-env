@@ -283,6 +283,7 @@ public class DodgeBallAgent : Agent
             if (info.Agent.HasEnemyFlag) // If anyone on my team has the enemy flag
             {
                 AddReward(m_TeamHasFlagBonus);
+                SupportRewardDistance(info.Agent);  // song_here
             }
         }
         //Only opponents who picked up the flag are visible
@@ -316,6 +317,19 @@ public class DodgeBallAgent : Agent
 
         //Location to flag
         sensor.AddObservation(GetRelativeCoordinates(currentFlagPosition));
+    }
+
+    // song_here
+    private void SupportRewardDistance(DodgeBallAgent flag)
+    {
+        if (flag != this)
+        {
+            var distance = Vector3.Distance(flag.transform.position, transform.position);
+            if (distance <= 4.0f)
+            {
+                AddReward(1.0f / (distance + 1.0f));
+            }
+        }
     }
 
     //Get normalized position relative to agent's current position.
