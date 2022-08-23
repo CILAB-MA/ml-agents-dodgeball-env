@@ -513,6 +513,7 @@ public class DodgeBallGameController : MonoBehaviour
     {
         if (hit.HasEnemyFlag)
         {
+            int hitTeamID = hit.teamID;
             var HitAgentGroup = hitTeamID == 1 ? m_Team1AgentGroup : m_Team0AgentGroup;
             HitAgentGroup.AddGroupReward(-2.0f);
         }
